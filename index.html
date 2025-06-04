@@ -94,12 +94,16 @@
         .section {
             display: none;
             min-height: calc(100vh - 80px);
-            padding: 4rem 2rem;
+            padding: 0;
             animation: fadeIn 0.6s ease-in;
         }
 
         .section.active {
             display: block;
+        }
+
+        .section-content {
+            padding: 4rem 2rem;
         }
 
         @keyframes fadeIn {
@@ -117,12 +121,16 @@
             text-align: center;
             background-size: cover;
             background-position: center;
-            padding: 6rem 2rem;
+            padding: 8rem 2rem;
             color: white;
-            border-radius: 0 0 50px 50px;
-            margin-bottom: 2rem;
+            margin: 0;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero::before {
@@ -328,8 +336,19 @@
             }
 
             .section {
+                padding: 0;
+            }
+
+            .section-content {
                 padding: 2rem 1rem;
             }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
 
             .contact-form {
                 padding: 2rem;
@@ -380,11 +399,20 @@
             font-size: 4rem;
         }
 
-        @media (max-width: 768px) {
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+        /* Contact map */
+        .map-container {
+            width: 100%;
+            height: 400px;
+            margin: 3rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -422,7 +450,8 @@
                     <a href="#" class="cta-button" onclick="showSection('contacto')">Contáctanos</a>
                 </div>
             </div>
-            <div class="container">
+            <div class="section-content">
+                <div class="container">
                 <div class="cards-grid">
                     <div class="card">
                         <div class="card-icon">🌟</div>
@@ -451,7 +480,8 @@
                     <p>Conoce nuestra historia, filosofía y el equipo que hace posible la transformación</p>
                 </div>
             </div>
-            <div class="container">
+            <div class="section-content">
+                <div class="container">
                 <h2>Nuestra Misión</h2>
                 <div class="about-content">
                     <div class="about-text">
@@ -476,7 +506,8 @@
                     <p>Terapias especializadas adaptadas a las necesidades de cada persona</p>
                 </div>
             </div>
-            <div class="container">
+            <div class="section-content">
+                <div class="container">
                 <h2>Programas Terapéuticos</h2>
                 <div class="cards-grid">
                     <div class="card">
@@ -521,8 +552,19 @@
                     <p>Estamos aquí para acompañarte en tu proceso de bienestar y transformación</p>
                 </div>
             </div>
-            <div class="container">
+            <div class="section-content">
+                <div class="container">
                 <h2>Información de Contacto</h2>
+                
+                <!-- Mapa de Google Maps -->
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102079.68420553767!2d-7.015199!3d37.261421!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd11d177e9c7cd31%3A0x5f6a9f7e5f6a8f7e!2sHuelva%2C%20Spain!5e0!3m2!1sen!2ses!4v1639000000000!5m2!1sen!2ses"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
                 <div class="contact-form">
                     <form id="contactForm">
                         <div class="form-group">
@@ -585,7 +627,8 @@
                     <p>Comparte nuestra pasión y descubre historias de transformación cada día</p>
                 </div>
             </div>
-            <div class="container">
+            <div class="section-content">
+                <div class="container">
                 <h2>Galería Social</h2>
                 <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem; color: #666;">
                     Descubre más sobre nuestras sesiones y conoce las historias de transformación de nuestros participantes.
