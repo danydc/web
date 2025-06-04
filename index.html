@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equinoterapias - Terapia Asistida con Caballos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .horse-icon {
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 3px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .section {
+            display: none;
+            min-height: calc(100vh - 80px);
+            padding: 4rem 2rem;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 2rem;
+            color: white;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(44, 85, 48, 0.7), rgba(74, 124, 89, 0.7));
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero backgrounds for each section */
+        .hero-inicio {
+            background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+        }
+
+        .hero-about {
+            background-image: url('https://images.unsplash.com/photo-1574681148061-7e9fea2bc0d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+        }
+
+        .hero-servicios {
+            background-image: url('https://images.unsplash.com/photo-1545850743-b9f28e4e6e52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+        }
+
+        .hero-contacto {
+            background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+        }
+
+        .hero-instagram {
+            background-image: url('https://images.unsplash.com/photo-1605849936688-c65b9cc664f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #e67e22, #f39c12);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #4a7c59;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #4a7c59;
+        }
+
+        .card h3 {
+            color: #2c5530;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Contact form */
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c5530;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4a7c59;
+        }
+
+        /* Instagram section */
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .instagram-post {
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .instagram-post:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #2c5530;
+                flex-direction: column;
+                padding: 2rem;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .contact-form {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        }
+
+        /* Section specific styles */
+        .section h2 {
+            color: #2c5530;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #4a7c59, #2c5530);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            background: linear-gradient(45deg, #4a7c59, #2c5530);
+            height: 300px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="horse-icon">🐴</span>
+                Equinoterapias
+            </div>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item active" data-section="inicio">Inicio</li>
+                    <li class="nav-item" data-section="sobre-nosotros">Sobre Nosotros</li>
+                    <li class="nav-item" data-section="servicios">Servicios</li>
+                    <li class="nav-item" data-section="contacto">Contacto</li>
+                    <li class="nav-item" data-section="instagram">Instagram</li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Sección Inicio -->
+        <section class="section active" id="inicio">
+            <div class="hero hero-inicio">
+                <div class="container">
+                    <h1>Equinoterapias</h1>
+                    <p>Terapia asistida con caballos para el bienestar físico y emocional</p>
+                    <a href="#" class="cta-button" onclick="showSection('contacto')">Contáctanos</a>
+                </div>
+            </div>
+            <div class="container">
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🌟</div>
+                        <h3>Bienestar Integral</h3>
+                        <p>Promovemos el equilibrio físico, mental y emocional a través de la conexión única entre humanos y caballos.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💚</div>
+                        <h3>Terapia Natural</h3>
+                        <p>Utilizamos métodos naturales y respetuosos que favorecen el desarrollo personal y la sanación.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🏆</div>
+                        <h3>Profesionalismo</h3>
+                        <p>Contamos con profesionales certificados y caballos especialmente entrenados para terapia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Sobre Nosotros -->
+        <section class="section" id="sobre-nosotros">
+            <div class="hero hero-about">
+                <div class="container">
+                    <h1>Sobre Nosotros</h1>
+                    <p>Conoce nuestra historia, filosofía y el equipo que hace posible la transformación</p>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Nuestra Misión</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>En Equinoterapias, creemos en el poder transformador de la conexión entre humanos y caballos. Nuestro centro se dedica a proporcionar terapia asistida con caballos de la más alta calidad.</p>
+                        
+                        <p>Con años de experiencia en el campo de la equinoterapia, nuestro equipo multidisciplinario está formado por profesionales especializados en fisioterapia, psicología y equitación terapéutica.</p>
+                        
+                        <p>Trabajamos con personas de todas las edades, adaptando nuestras sesiones a las necesidades específicas de cada individuo para lograr los mejores resultados en su proceso de recuperación y bienestar.</p>
+                    </div>
+                    <div class="about-image">
+                        🐎
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Servicios -->
+        <section class="section" id="servicios">
+            <div class="hero hero-servicios">
+                <div class="container">
+                    <h1>Nuestros Servicios</h1>
+                    <p>Terapias especializadas adaptadas a las necesidades de cada persona</p>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Programas Terapéuticos</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🧘‍♀️</div>
+                        <h3>Hipoterapia</h3>
+                        <p>Utilización del movimiento del caballo como herramienta terapéutica para mejorar el equilibrio, la coordinación y el tono muscular.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">👥</div>
+                        <h3>Equitación Terapéutica</h3>
+                        <p>Sesiones dirigidas que combinan técnicas de equitación adaptada con objetivos terapéuticos específicos.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🎯</div>
+                        <h3>Actividades Asistidas</h3>
+                        <p>Programas educativos y recreativos que incluyen el cuidado y manejo de caballos para desarrollo personal.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💭</div>
+                        <h3>Terapia Psicológica</h3>
+                        <p>Sesiones que utilizan la interacción con caballos para abordar aspectos emocionales y psicológicos.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🏥</div>
+                        <h3>Rehabilitación Física</h3>
+                        <p>Programas especializados para recuperación de lesiones y mejora de capacidades físicas.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">👶</div>
+                        <h3>Terapia Infantil</h3>
+                        <p>Programas especialmente diseñados para niños con necesidades especiales o en desarrollo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section class="section" id="contacto">
+            <div class="hero hero-contacto">
+                <div class="container">
+                    <h1>Contáctanos</h1>
+                    <p>Estamos aquí para acompañarte en tu proceso de bienestar y transformación</p>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Información de Contacto</h2>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono">
+                        </div>
+                        <div class="form-group">
+                            <label for="servicio">Servicio de interés</label>
+                            <select id="servicio" name="servicio" style="width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                                <option value="">Selecciona un servicio</option>
+                                <option value="hipoterapia">Hipoterapia</option>
+                                <option value="equitacion">Equitación Terapéutica</option>
+                                <option value="actividades">Actividades Asistidas</option>
+                                <option value="psicologica">Terapia Psicológica</option>
+                                <option value="rehabilitacion">Rehabilitación Física</option>
+                                <option value="infantil">Terapia Infantil</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje</label>
+                            <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos sobre tus necesidades o consultas..."></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%;">Enviar mensaje</button>
+                    </form>
+                </div>
+                
+                <div class="cards-grid" style="margin-top: 3rem;">
+                    <div class="card">
+                        <div class="card-icon">📍</div>
+                        <h3>Ubicación</h3>
+                        <p>Consulta nuestra ubicación y horarios de atención.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📞</div>
+                        <h3>Teléfono</h3>
+                        <p>Llámanos para agendar tu cita o resolver tus dudas.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">✉️</div>
+                        <h3>Email</h3>
+                        <p>Escríbenos y te responderemos a la brevedad.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Instagram -->
+        <section class="section" id="instagram">
+            <div class="hero hero-instagram">
+                <div class="container">
+                    <h1>Síguenos en Instagram</h1>
+                    <p>Comparte nuestra pasión y descubre historias de transformación cada día</p>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Galería Social</h2>
+                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem; color: #666;">
+                    Descubre más sobre nuestras sesiones y conoce las historias de transformación de nuestros participantes.
+                </p>
+                
+                <div class="instagram-grid">
+                    <div class="instagram-post">
+                        <span>📸<br>Sesión de<br>Hipoterapia</span>
+                    </div>
+                    <div class="instagram-post">
+                        <span>🌟<br>Momentos<br>Especiales</span>
+                    </div>
+                    <div class="instagram-post">
+                        <span>💝<br>Testimonios<br>Reales</span>
+                    </div>
+                    <div class="instagram-post">
+                        <span>🐴<br>Nuestros<br>Caballos</span>
+                    </div>
+                    <div class="instagram-post">
+                        <span>👥<br>Nuestro<br>Equipo</span>
+                    </div>
+                    <div class="instagram-post">
+                        <span>🎯<br>Actividades<br>Diarias</span>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="#" class="cta-button">@equinoterapias</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navigation functionality
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.section');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        function showSection(sectionId) {
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav items
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Add active class to corresponding nav item
+            const targetNavItem = document.querySelector(`[data-section="${sectionId}"]`);
+            if (targetNavItem) {
+                targetNavItem.classList.add('active');
+            }
+
+            // Close mobile menu if open
+            navMenu.classList.remove('active');
+        }
+
+        // Add click event listeners to navigation items
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.getAttribute('data-section');
+                showSection(sectionId);
+            });
+        });
+
+        // Hamburger menu toggle
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+            this.reset();
+        });
+
+        // Instagram posts click effect
+        document.querySelectorAll('.instagram-post').forEach(post => {
+            post.addEventListener('click', () => {
+                alert('¡Próximamente enlazaremos con nuestro Instagram!');
+            });
+        });
+
+        // Smooth scrolling effect for page transitions
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
